@@ -1,0 +1,354 @@
+.create-text-page {
+    padding: 40px;
+}
+
+.create-text-page h1 {
+    margin-bottom: 32px;
+}
+
+.create-section {
+    margin-bottom: 36px;
+    padding: 24px 28px;
+
+    border-radius: 18px;
+    background: rgba(255,255,255,0.55);
+
+    box-shadow:
+            0 10px 28px rgba(0, 120, 255, 0.18),
+            inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+.create-section h2 {
+    margin: 0 0 18px;
+    font-size: 22px;
+    color: #034;
+}
+
+.create-section input,
+.create-section select,
+.create-section textarea {
+    width: 100%;
+    padding: 14px 16px;
+
+    border-radius: 14px;
+    border: none;
+    outline: none;
+
+    font-size: 15px;
+    background: rgba(255,255,255,0.85);
+
+    box-shadow:
+            inset 0 1px 2px rgba(0,0,0,0.08);
+}
+
+.create-section textarea {
+    resize: vertical;
+    line-height: 1.6;
+}
+
+.create-section .row {
+    display: flex;
+    gap: 16px;
+    margin-top: 14px;
+}
+
+.create-section .row > * {
+    flex: 1;
+}
+
+.create-section button,
+.create-actions button {
+    padding: 12px 18px;
+    border-radius: 14px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    border: none;
+    cursor: pointer;
+
+    background: linear-gradient(#eaf6ff, #cde8ff);
+    color: #034;
+
+    box-shadow:
+            inset 0 1px 0 rgba(255,255,255,0.9),
+            0 6px 18px rgba(0,0,0,0.12);
+
+    transition: transform 0.15s ease;
+}
+
+.create-section button:hover,
+.create-actions button:hover {
+    transform: translateY(-1px);
+}
+
+.create-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 32px;
+}
+
+.timing-list {
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.timing-row {
+    display: grid;
+    grid-template-columns: 1fr 120px 120px;
+    gap: 12px;
+    align-items: center;
+}
+
+.timing-row span {
+    font-size: 14px;
+    color: #345;
+}
+
+.word-editor {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) auto;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.word-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.word-preview .word-card {
+    padding: 16px;
+    border-radius: 16px;
+
+    background: rgba(255,255,255,0.75);
+    box-shadow:
+            0 8px 20px rgba(0,120,255,0.25),
+            inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+.word-preview .word {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.word-preview .translation {
+    margin-top: 4px;
+    font-size: 14px;
+    color: #056;
+}
+
+.word-preview .example {
+    margin-top: 6px;
+    font-size: 13px;
+    opacity: 0.75;
+}
+
+.fab-create {
+    position: fixed;
+    right: 32px;
+    bottom: 32px;
+    z-index: 1000;
+
+    padding: 16px 22px;
+    border-radius: 999px;
+
+    font-size: 16px;
+    font-weight: 700;
+
+    border: none;
+    cursor: pointer;
+
+    background: radial-gradient(circle at 30% 30%, #ffffff, #9fd6ff, #6aa9ff);
+    color: #033;
+
+    box-shadow:
+            0 14px 36px rgba(0, 120, 255, 0.45),
+            inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+
+.word-editor {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 14px;
+    margin-bottom: 28px;
+}
+
+.word-editor input {
+    padding: 12px 14px;
+    border-radius: 14px;
+    border: none;
+    font-size: 14px;
+
+    background: rgba(255,255,255,0.7);
+    box-shadow:
+            inset 0 1px 0 rgba(255,255,255,0.9);
+}
+
+.word-editor button {
+    grid-column: span 2;
+    justify-self: flex-start;
+}
+
+
+.word-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 18px;
+}
+
+.word-card-preview {
+    position: relative;
+    padding: 18px 20px;
+    border-radius: 18px;
+
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(12px) saturate(120%);
+    box-shadow:
+            0 10px 30px rgba(0,120,255,0.25),
+            inset 0 1px 0 rgba(255,255,255,0.9);
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    transition:
+            transform 0.18s ease,
+            box-shadow 0.18s ease;
+}
+
+.word-card-preview:hover {
+    transform: translateY(-3px);
+    box-shadow:
+            0 16px 40px rgba(0,120,255,0.35),
+            inset 0 1px 0 rgba(255,255,255,1);
+}
+
+
+.word-main {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.word-main strong {
+    font-size: 18px;
+    color: #034;
+}
+
+.word-main span {
+    font-size: 15px;
+    font-weight: 600;
+    color: #056;
+}
+
+
+.word-meta {
+    font-size: 13px;
+    opacity: 0.75;
+}
+
+.word-example {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #345;
+
+    padding-top: 6px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+
+.word-card-preview .remove {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    width: 26px;
+    height: 26px;
+
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    background: rgba(255,255,255,0.75);
+    color: #456;
+
+    box-shadow:
+            inset 0 1px 0 rgba(255,255,255,0.9),
+            0 4px 10px rgba(0,0,0,0.15);
+
+    opacity: 0;
+    transition:
+            opacity 0.15s ease,
+            transform 0.15s ease;
+}
+
+.word-card-preview:hover .remove {
+    opacity: 1;
+}
+
+.word-card-preview .remove:hover {
+    transform: scale(1.1);
+    background: rgba(255,220,220,0.85);
+    color: #a33;
+}
+
+.save-hint {
+    margin-top: 12px;
+    padding: 12px 14px;
+    border-radius: 14px;
+
+    background: rgba(255, 160, 160, 0.18);
+    border: 1px solid rgba(255, 120, 120, 0.25);
+
+    color: rgba(255, 255, 255, 0.92);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.25);
+
+    cursor: pointer;
+
+    box-shadow:
+            inset 0 1px 0 rgba(255,255,255,0.25),
+            0 10px 26px rgba(0,0,0,0.18);
+}
+
+.save-toast {
+    position: fixed;
+    left: 50%;
+    bottom: 28px;
+    transform: translateX(-50%);
+
+    padding: 14px 20px;
+    border-radius: 14px;
+
+    background: rgba(255, 80, 80, 0.9);
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+
+    box-shadow:
+            0 10px 30px rgba(255, 80, 80, 0.45),
+            inset 0 1px 0 rgba(255,255,255,0.3);
+
+    cursor: pointer;
+    z-index: 2000;
+
+    animation: toast-in 0.25s ease;
+}
+
+@keyframes toast-in {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
