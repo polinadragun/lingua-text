@@ -37,8 +37,16 @@ export const QuestionsBlock = () => {
                         </button>
 
                         <div className={`answer-wrapper ${isOpen ? "open" : ""}`}>
-                            <div className="answer">{item.a}</div>
+                            <div className="answer-row">
+                                <div className="answer">
+                                    <div className="answer-inner">
+                                        {item.a}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
+
                     </div>
                 );
             })}
