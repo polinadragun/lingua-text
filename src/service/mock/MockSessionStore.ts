@@ -1,19 +1,22 @@
 import { AuthSession } from "../../entity/AuthSession";
 
-const KEY = "mock-session";
-
+/**
+ * In-memory session mirror for UI / author email in API helpers.
+ * Auth tokens live in httpOnly cookies, not here.
+ */
 class MockSessionStore {
+    private session: AuthSession | null = null;
+
     get(): AuthSession | null {
-        const raw = localStorage.getItem(KEY);
-        return raw ? JSON.parse(raw) : null;
+        return this.session;
     }
 
     set(session: AuthSession) {
-        localStorage.setItem(KEY, JSON.stringify(session));
+        this.session = session;
     }
 
     clear() {
-        localStorage.removeItem(KEY);
+        this.session = null;
     }
 }
 

@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useProfileStore } from "../store/ProfileStore";
-import { texts } from "../data/catalog";
+import { fetchCatalog } from "../api/textsApi";
 
 export const ProfilePage = () => {
+    const navigate = useNavigate();
     const {
         progress,
         loading,
@@ -13,22 +15,53 @@ export const ProfilePage = () => {
     } = useProfileStore();
 
     const [level, setLevel] = useState("");
+    const [favoriteTexts, setFavoriteTexts] = useState<
+        Array<{ id: string; title: string; level: string; topic: string }>
+    >([]);
 
     useEffect(() => {
-        loadProfile();
-    }, []);
+        void loadProfile();
+    }, [loadProfile]);
 
     useEffect(() => {
         if (progress) setLevel(progress.level);
     }, [progress]);
 
+    useEffect(() => {
+        if (!progress?.favorites?.length) {
+            setFavoriteTexts([]);
+            return;
+        }
+
+        let cancelled = false;
+
+        fetchCatalog({ limit: 200, page: 1 })
+            .then((res) => {
+                if (cancelled) return;
+                const fav = new Set(progress.favorites);
+                setFavoriteTexts(
+                    res.items
+                        .filter((t) => fav.has(t.slug))
+                        .map((t) => ({
+                            id: t.id,
+                            title: t.title,
+                            level: t.level,
+                            topic: t.topic,
+                        }))
+                );
+            })
+            .catch(() => {
+                if (!cancelled) setFavoriteTexts([]);
+            });
+
+        return () => {
+            cancelled = true;
+        };
+    }, [progress]);
+
     if (loading || !progress) {
         return <div className="page glass">Loading profile…</div>;
     }
-
-    const favoriteTexts = texts.filter(t =>
-        progress.favorites.includes(t.id)
-    );
 
     return (
         <div className="page glass profile-page">
@@ -54,14 +87,22 @@ export const ProfilePage = () => {
                     )}
                 </div>
 
-                <div className="stat-card">
+                <div
+                    className="stat-card"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => navigate("/profile/texts-read")}
+                >
                     <span className="stat-label">Texts read</span>
                     <span className="stat-value">
                         {progress.textsRead.length}
                     </span>
                 </div>
 
-                <div className="stat-card">
+                <div
+                    className="stat-card"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => navigate("/profile/words-learned")}
+                >
                     <span className="stat-label">Words learned</span>
                     <span className="stat-value">
                         {progress.learnedWords}

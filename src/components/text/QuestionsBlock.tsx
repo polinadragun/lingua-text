@@ -1,19 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const questions = [
-    { q: "What advantages does city life offer?", a: "Many opportunities and access to technology." },
-    { q: "Why can it be exhausting?", a: "Because of the fast pace and pressure." },
-    { q: "What becomes valuable?", a: "Moments of silence and rest." }
-];
+export const QuestionsBlock = ({
+    questions,
+}: {
+    questions?: { q: string; a: string }[];
+}) => {
+    const list = questions ?? [];
+    const [open, setOpen] = useState<boolean[]>(() => list.map(() => false));
 
-export const QuestionsBlock = () => {
-    const [open, setOpen] = useState<boolean[]>(() => questions.map(() => false));
+    useEffect(() => {
+        setOpen(list.map(() => false));
+    }, [list]);
 
     return (
         <div className="questions">
             <h2>Comprehension Questions</h2>
 
-            {questions.map((item, i) => {
+            {list.map((item, i) => {
                 const isOpen = open[i] === true;
 
                 return (

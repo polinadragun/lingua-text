@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { SentenceDraft, TextDraft, WordCardDraft } from "../entity/TextDraft";
+import { TextDraft, WordCardDraft } from "../entity/TextDraft";
 import { ServiceRegistry } from "../service/ServiceRegistry";
 
 interface CreateTextState {
@@ -28,7 +28,7 @@ interface CreateTextState {
 
     validateForSave: () => string | null;
     clearSaveError: () => void;
-    save: () => Promise<boolean>;
+    save: () => Promise<string | false>;
     reset: () => void;
 }
 
@@ -36,7 +36,7 @@ export const useCreateTextStore = create<CreateTextState>((set, get) => ({
     draft: {
         title: "",
         level: "B2",
-        topic: "General",
+        topic: "Technology",
         sentences: [],
         audioFile: null,
         words: [],
@@ -154,19 +154,13 @@ export const useCreateTextStore = create<CreateTextState>((set, get) => ({
         if (!draft.title.trim()) return "Please enter a title";
         if (!isSplit) return "Split the text into sentences";
         if (!draft.sentences.length) return "No sentences found";
-        if (!draft.audioFile) return "Upload an audio file";
-
-        const badTiming = draft.sentences.find(
-            s => s.start == null || s.end == null || s.end <= s.start
-        );
-        if (badTiming) return "Fill valid timings for all sentences";
 
         return null;
     },
 
     clearSaveError: () => set({ saveError: null }),
 
-    save: async () => {
+    save: async (): Promise<string | false> => {
         const error = get().validateForSave();
         set({ saveError: error });
 
@@ -174,12 +168,20 @@ export const useCreateTextStore = create<CreateTextState>((set, get) => ({
 
         set({ saving: true });
 
-        await ServiceRegistry.createTextService.saveDraft(get().draft);
-
-        set({ saving: false });
-        get().reset();
-
-        return true;
+        try {
+            const slug = await ServiceRegistry.createTextService.saveDraft(
+                get().draft
+            );
+            set({ saving: false });
+            get().reset();
+            return slug;
+        } catch (e) {
+            set({
+                saving: false,
+                saveError: e instanceof Error ? e.message : "Save failed",
+            });
+            return false;
+        }
     },
 
     reset: () =>
@@ -191,7 +193,7 @@ export const useCreateTextStore = create<CreateTextState>((set, get) => ({
             draft: {
                 title: "",
                 level: "B2",
-                topic: "General",
+                topic: "Technology",
                 sentences: [],
                 audioFile: null,
                 words: [],

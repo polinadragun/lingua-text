@@ -2,5 +2,6 @@ import { User } from "./User";
 
 export interface AuthSession {
     user: User;
-    token: string;
+    /** Deprecated: access JWT is in httpOnly cookie only. */
+    token?: string | null;
 }

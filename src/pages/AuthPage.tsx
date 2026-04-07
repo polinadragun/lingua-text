@@ -13,7 +13,6 @@ export const AuthPage = () => {
 
     const login = useAuthStore(state => state.login);
     const register = useAuthStore(state => state.register);
-    const isAuth = useAuthStore(state => state.isAuth);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -28,13 +27,15 @@ export const AuthPage = () => {
             password
         };
 
-        if (mode === "login") {
-            await login(credentials);
+        const ok =
+            mode === "login"
+                ? await login(credentials)
+                : await register(credentials);
+        if (ok) {
+            navigate("/profile");
         } else {
-            await register(credentials);
+            alert(mode === "login" ? "Invalid credentials" : "Registration failed");
         }
-
-        navigate("/profile");
     };
 
     return (

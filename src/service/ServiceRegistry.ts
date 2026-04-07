@@ -1,9 +1,9 @@
 import { AuthService } from "./auth/AuthService";
-import { AuthServiceMockImpl } from "./auth/AuthServiceMockImpl";
+import { AuthServiceApiImpl } from "./auth/AuthServiceApiImpl";
 import { ProfileService } from "./profile/ProfileService";
-import { ProfileServiceMockImpl } from "./profile/ProfileServiceMockImpl";
-import {CreateTextService} from "./text/CreateTextService";
-import {CreateTextServiceMockImpl} from "./text/CreateTextServiceMockImpl";
+import { ProfileServiceApiImpl } from "./profile/ProfileServiceApiImpl";
+import { CreateTextService } from "./text/CreateTextService";
+import { CreateTextServiceApiImpl } from "./text/CreateTextServiceApiImpl";
 import {CatalogService} from "./catalog/CatalogService";
 import {CatalogServiceMockImpl} from "./catalog/CatalogServiceMockImpl";
 
@@ -15,21 +15,21 @@ export class ServiceRegistry {
 
     static get authService(): AuthService {
         if (!this._authService) {
-            this._authService = new AuthServiceMockImpl();
+            this._authService = new AuthServiceApiImpl();
         }
         return this._authService;
     }
 
     static get profileService(): ProfileService {
         if (!this._profileService) {
-            this._profileService = new ProfileServiceMockImpl();
+            this._profileService = new ProfileServiceApiImpl();
         }
         return this._profileService;
     }
 
     static get createTextService(): CreateTextService {
         if (!this._createTextService) {
-            this._createTextService = new CreateTextServiceMockImpl();
+            this._createTextService = new CreateTextServiceApiImpl();
         }
         return this._createTextService;
     }

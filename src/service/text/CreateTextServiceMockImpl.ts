@@ -5,7 +5,7 @@ import { TextEntity } from "../../entity/TextEntity";
 import { mockSessionStore } from "../mock/MockSessionStore";
 
 export class CreateTextServiceMockImpl implements CreateTextService {
-    async saveDraft(draft: TextDraft): Promise<void> {
+    async saveDraft(draft: TextDraft): Promise<string> {
         const session = mockSessionStore.get();
         if (!session) throw new Error("Not authenticated");
 
@@ -21,5 +21,6 @@ export class CreateTextServiceMockImpl implements CreateTextService {
         };
 
         mockTextStore.add(entity);
+        return entity.id;
     }
 }

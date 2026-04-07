@@ -1,39 +1,32 @@
 import { create } from "zustand";
 import { TextPreview } from "../entity/TextPreview";
-import { mockTextStore } from "../service/mock/MockTextStore";
-import { texts as demoTexts } from "../data/catalog";
-import { useLanguageStore } from "./LanguageStore";
+import { fetchCatalog } from "../api/textsApi";
+import type { Level, Topic, Length } from "../entity/TextEnums";
 
 export const useCatalogStore = create<{
     texts: TextPreview[];
     loading: boolean;
-    load: () => void;
+    load: (language?: string) => Promise<void>;
 }>((set) => ({
     texts: [],
     loading: false,
 
-    load: () => {
+    load: async (language) => {
         set({ loading: true });
-
-        const lang = useLanguageStore.getState().lang;
-
-        const created: TextPreview[] = mockTextStore
-            .getByLanguage(lang)
-            .map(t => ({
+        try {
+            const res = await fetchCatalog({ limit: 500, page: 1, language });
+            const texts: TextPreview[] = res.items.map((t) => ({
                 id: t.id,
+                slug: t.slug,
                 title: t.title,
-                level: t.level,
-                topic: t.topic,
-                language: t.language,
-                author: t.author,
-                length: t.sentences.length > 6 ? "Medium" : "Short",
+                level: t.level as Level,
+                topic: t.topic as Topic,
+                length: t.length as Length,
+                language: (t.language ?? "en") as TextPreview["language"],
             }));
-
-        const demo = demoTexts.filter(t => t.language === lang);
-
-        set({
-            texts: [...demo, ...created],
-            loading: false,
-        });
+            set({ texts, loading: false });
+        } catch {
+            set({ texts: [], loading: false });
+        }
     },
 }));

@@ -17,8 +17,8 @@ export const CreateTextPage = () => {
     const clearSaveError = useCreateTextStore(s => s.clearSaveError);
 
     const onSave = async () => {
-        const ok = await save();
-        if (ok) navigate("/");
+        const slug = await save();
+        if (slug) navigate(`/text/${slug}`);
     };
 
     useEffect(() => {

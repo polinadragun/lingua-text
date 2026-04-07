@@ -1,7 +1,6 @@
 import { CatalogService } from "./CatalogService";
 import { TextPreview } from "../../entity/TextPreview";
 import { mockTextStore } from "../mock/MockTextStore";
-import { Length } from "../../entity/TextEnums";
 
 export class CatalogServiceMockImpl implements CatalogService {
     async getAll(): Promise<TextPreview[]> {
@@ -9,6 +8,7 @@ export class CatalogServiceMockImpl implements CatalogService {
 
         return mockTextStore.getAll().map(t => ({
             id: t.id,
+            slug: t.id,
             title: t.title,
             level: t.level,
             topic: t.topic,

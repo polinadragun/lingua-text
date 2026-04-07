@@ -6,16 +6,23 @@ interface Props {
     sentences: Sentence[];
     activeSentenceId: string | null;
     words: Record<string, WordInfo>;
+    learnedKeys: Set<string>;
+    onToggleWord: (key: string) => Promise<void>;
+    wordLoadingKey: string | null;
 }
 
 export const TextContent = ({
                                 sentences,
                                 activeSentenceId,
-                                words
+                                words,
+                                learnedKeys,
+                                onToggleWord,
+                                wordLoadingKey
                             }: Props) => {
     const containerRef = useRef<HTMLDivElement>(null);
 
     const [selected, setSelected] = useState<{
+        key: string;
         word: WordInfo;
         pos: { top: number; left: number };
     } | null>(null);
@@ -50,6 +57,7 @@ export const TextContent = ({
                                             containerRef.current.getBoundingClientRect();
 
                                         setSelected({
+                                            key: cleanWord,
                                             word: info,
                                             pos: {
                                                 top: wordRect.bottom - containerRect.top + 8,
@@ -69,6 +77,9 @@ export const TextContent = ({
             {selected && (
                 <WordPopover
                     word={selected.word}
+                    learned={learnedKeys.has(selected.key)}
+                    loading={wordLoadingKey === selected.key}
+                    onToggleLearned={() => void onToggleWord(selected.key)}
                     pos={selected.pos}
                     onClose={() => setSelected(null)}
                 />

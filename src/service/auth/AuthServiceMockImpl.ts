@@ -8,7 +8,7 @@ export class AuthServiceMockImpl implements AuthService {
     async login({ email }: AuthCredentials): Promise<AuthSession> {
         const session: AuthSession = {
             user: { email, level: "B2" },
-            token: "mock-token",
+            token: null,
         };
 
         mockSessionStore.set(session);

@@ -1,5 +1,5 @@
-import {TextDraft} from "../../entity/TextDraft";
+import { TextDraft } from "../../entity/TextDraft";
 
 export interface CreateTextService {
-    saveDraft(draft: TextDraft): Promise<void>;
+    saveDraft(draft: TextDraft): Promise<string>;
 }

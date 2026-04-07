@@ -3,11 +3,14 @@ import { WordInfo } from "../../types/text";
 
 interface Props {
     word: WordInfo;
+    learned: boolean;
+    loading: boolean;
+    onToggleLearned: () => void;
     pos: { top: number; left: number };
     onClose: () => void;
 }
 
-export const WordPopover = ({ word, pos, onClose }: Props) => {
+export const WordPopover = ({ word, learned, loading, onToggleLearned, pos, onClose }: Props) => {
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -31,6 +34,23 @@ export const WordPopover = ({ word, pos, onClose }: Props) => {
             }}
         >
             <div className="popover-arrow" />
+            <button
+                type="button"
+                onClick={onToggleLearned}
+                disabled={loading}
+                style={{
+                    position: "absolute",
+                    right: 10,
+                    top: 10,
+                    border: "none",
+                    background: "transparent",
+                    cursor: loading ? "wait" : "pointer",
+                    fontSize: 18,
+                }}
+                aria-label={learned ? "Remove learned word" : "Add learned word"}
+            >
+                {learned ? "✓" : "+"}
+            </button>
             <h4>{word.word}</h4>
             <p className="transcription">{word.transcription}</p>
             <p className="translation">{word.translation}</p>
