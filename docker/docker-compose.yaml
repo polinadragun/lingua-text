@@ -6,6 +6,8 @@ services:
     container_name: lingua_frontend
     restart: unless-stopped
     networks: [web]
+    env_file:
+      - ../.env
     ports:
       - "3011:80"
 
