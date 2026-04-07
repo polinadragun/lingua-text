@@ -1,0 +1,14 @@
+services:
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: lingua_frontend
+    restart: unless-stopped
+    networks: [web]
+    ports:
+      - "3011:80"
+
+networks:
+  web:
+    external: true
