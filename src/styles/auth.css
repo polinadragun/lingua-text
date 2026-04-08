@@ -74,3 +74,25 @@
     font-weight: 600;
     color: #045;
 }
+
+.auth-password-rules {
+    margin: -6px 2px 0;
+    font-size: 13px;
+    color: #456;
+}
+
+.auth-error {
+    margin-top: -6px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #8b1e1e;
+    background: rgba(255, 220, 220, 0.7);
+    border: 1px solid rgba(180, 40, 40, 0.25);
+}
+
+.auth-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}

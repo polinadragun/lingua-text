@@ -7,11 +7,13 @@ interface AuthState {
     isAuth: boolean;
     user: User | null;
     loading: boolean;
+    authError: string | null;
 
     login: (credentials: AuthCredentials) => Promise<boolean>;
     register: (credentials: AuthCredentials) => Promise<boolean>;
     logout: () => Promise<void>;
     restoreSession: () => Promise<void>;
+    clearAuthError: () => void;
 }
 
 export const useAuthStore = create<AuthState>()((set) => ({
@@ -19,9 +21,10 @@ export const useAuthStore = create<AuthState>()((set) => ({
     user: null,
     /** Start true so the app waits for restoreSession before rendering protected routes / profile. */
     loading: true,
+    authError: null,
 
     login: async (credentials) => {
-        set({ loading: true });
+        set({ loading: true, authError: null });
 
         try {
             const session =
@@ -35,13 +38,14 @@ export const useAuthStore = create<AuthState>()((set) => ({
 
             return true;
         } catch (e) {
-            set({ loading: false });
+            const message = e instanceof Error ? e.message : "Authentication failed";
+            set({ loading: false, authError: message });
             return false;
         }
     },
 
     register: async (credentials) => {
-        set({ loading: true });
+        set({ loading: true, authError: null });
 
         try {
             const session =
@@ -54,8 +58,9 @@ export const useAuthStore = create<AuthState>()((set) => ({
             });
 
             return true;
-        } catch {
-            set({ loading: false });
+        } catch (e) {
+            const message = e instanceof Error ? e.message : "Registration failed";
+            set({ loading: false, authError: message });
             return false;
         }
     },
@@ -80,13 +85,19 @@ export const useAuthStore = create<AuthState>()((set) => ({
                 isAuth: true,
                 user: session.user,
                 loading: false,
+                authError: null,
             });
         } else {
             set({
                 isAuth: false,
                 user: null,
                 loading: false,
+                authError: null,
             });
         }
+    },
+
+    clearAuthError: () => {
+        set({ authError: null });
     },
 }));
